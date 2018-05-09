@@ -1,0 +1,25 @@
+{
+  "name": "parallel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Raylin51/parallel-pen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Raylin51/parallel-pen/issues"
+  },
+  "homepage": "https://github.com/Raylin51/parallel-pen#readme",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "express": "^4.16.3",
+    "md5": "^2.2.1",
+    "mongodb": "^3.0.7"
+  }
+}
