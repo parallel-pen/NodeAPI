@@ -10,7 +10,7 @@
 
 ```json
 {
-  "code": 200000, /* 非100000的code都为错误返回 */
+  "code": 200000,
   "msg": "xxx"
 }
 ```
@@ -36,9 +36,9 @@ response:
 {
   "code": 100000,
   "uid": 1,
-  "token": "fdafadhskghaiudgaiu", //每次请求放在http header中进行用户身份验证
+  "token": "fdafadhskghaiudgaiu",
   "username": "长尼玛",
-  "my_content": []  //用户遍及的内容
+  "my_content": []
 }
 ```
 
@@ -61,9 +61,9 @@ response:
 {
   "code": 100000,
   "uid": 1,
-  "token": "fdafadhskghaiudgaiu", //每次请求放在http header中进行用户身份验证
+  "token": "fdafadhskghaiudgaiu",
   "username": "长尼玛",
-  "my_content": [] //用户编辑的内容
+  "my_content": []
 }
 ```
 
@@ -73,11 +73,11 @@ response:
 
 ```GET /node/list```
 
-params: 
+params: (可选，为空时返回初始节点)
 
 ```json
 {
-  "node_id": 562523423523 // 节点id，非必传，为空时为初始节点
+  "node_id": 562523423523
 }
 ```
 
@@ -99,11 +99,11 @@ response:
 
 ```GET /node/content```
 
-params:
+params: (可选，为空时返回初始节点)
 
 ```json
 {
-  "node_id": 5643434 //节点id，非必传，为空时为初始节点
+  "node_id": 5643434
 }
 ```
 
@@ -117,7 +117,7 @@ response:
   "desc": "这是描述",
   "timestamp": "xxxx-xx-xx",
   "author": "长尼玛",
-  "child_node": false //表示下面是否还有子节点
+  "child_node": false
 }
 ```
 
@@ -145,6 +145,6 @@ response:
   "desc": "这是描述",
   "timestamp": "xxxx-xx-xx",
   "author": "长尼玛",
-  "child_node": false //表示下面是否还有子节点
+  "child_node": false
 }
 ```
