@@ -29,7 +29,7 @@ module.exports = async (opt) => {
                     callback(result);
                 });
             }else if(type == 'updateOne'){
-                collection[type](query, `{ $set: ${data} }`, (err, result) => { 
+                collection[type](query, data, (err, result) => { 
                     if(err){
                         console.log('Error:'+ err);
                         resolve(err);

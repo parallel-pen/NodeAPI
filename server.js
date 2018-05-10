@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({            //此项必须在 bodyParser.json 下
 }));
 
 let user = require('./routes/user');
+let node = require('./routes/node');
 
 // all
 app.all('*', function(req, res, next) {
@@ -21,8 +22,11 @@ app.all('*', function(req, res, next) {
 });
 
 // 账户操作
-app.post('/api/login', user.index);
-app.post('/api/resigter', user.create);
+app.post('/api/login', user.login);
+app.post('/api/resigter', user.resigter);
+
+// 内容操作
+app.get('/api/node/list', node.list);
 
 
 app.listen(8888, function() {
