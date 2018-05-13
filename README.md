@@ -112,6 +112,7 @@ response:
 ```json
 {
   "code": 100000,
+  "node_id": 12,
   "father_id": 10,
   "content": "这是详细内容",
   "desc": "这是描述",
@@ -140,6 +141,7 @@ response:
 ```json
 {
   "code": 100000,
+  "node_id": 12,
   "father_id": 10,
   "content": "这是详细内容",
   "desc": "这是描述",

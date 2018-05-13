@@ -4,7 +4,47 @@ const db = require('../assets/dbaction');
 const checkToken = require('../assets/tokencheck');
 
 exports.list = async (req, res) => {
-    let nodeId = req.body.node_id;
+    const token = req.header('Authorization');
+    const nodeId = req.query.node_id;
+    const user = await checkToken(token);
+    if (!user) {
+        res.statusCode = 401;
+        res.send({
+            code: 300000,
+            msg: '登录信息过期'
+        });
+        return;
+    }
+    let uid = user[0]._id;
+    let nodeOpt = {
+        type: 'find',
+        table: 'nodes',
+        query: {
+            [nodeId ? "_id" : 'first']: nodeId || true
+        }
+    };
+    console.log(nodeOpt);
+    let nodeFind = await db(nodeOpt);
+    if (nodeFind.length === 0) {
+        res.send({
+            code: 200012,
+            msg: 'Id错误'
+        });
+        return;
+    }
+    let { _id, father_id, content, desc, author_id, child_nodes } = nodeFind[0];
+    let _str = _id.toString().substr(0, 8);
+    let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
+    res.send({
+        code: 100000,
+        node_id: _id,
+        father_id: father_id,
+        content: content,
+        desc: desc,
+        timestamp: timestamp,
+        author_id: uid,
+        child_nodes: false
+    });
 }
 
 exports.create = async (req, res) => {
@@ -50,7 +90,8 @@ exports.create = async (req, res) => {
             desc: desc,
             author_id: uid,
             hash: hash,
-            father_id: fatherId
+            father_id: fatherId,
+            child_nodes: false
         }
     };
     let nodeCreate = await db(nodeOpt);
@@ -65,6 +106,7 @@ exports.create = async (req, res) => {
     let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
     res.send({
         code: 100000,
+        node_id: nodeCreate.ops[0]._id,
         father_id: fatherId,
         content: content,
         desc: desc,

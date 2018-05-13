@@ -1,5 +1,6 @@
 'use strict';
 const mongodb = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectId;
 
 /* 
     type: 数据库操作, (find, updateOne, delete, insertOne)
@@ -19,6 +20,9 @@ module.exports = async (opt) => {
             let collection = db.collection(opt.table);
             //插入数据
             let { data, query, sort, type } = opt;
+            if (query._id !== undefined) {
+                query._id = ObjectId(query._id);
+            }
             if(type == 'find'){
                 collection.find(query||{}).sort(sort||{}).toArray((err, result) => { 
                     if(err){
