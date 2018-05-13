@@ -23,7 +23,7 @@ module.exports = async (opt) => {
                 collection.find(query||{}).sort(sort||{}).toArray((err, result) => { 
                     if(err){
                         console.log('Error:'+ err);
-                        resolve(err);
+                        reject(err);
                         return;
                     }
                     callback(result);
@@ -32,7 +32,7 @@ module.exports = async (opt) => {
                 collection[type](query, data, (err, result) => { 
                     if(err){
                         console.log('Error:'+ err);
-                        resolve(err);
+                        reject(err);
                         return;
                     }
                     callback(result);
@@ -41,7 +41,7 @@ module.exports = async (opt) => {
                 collection[type](query, (err, result) => { 
                     if(err){
                         console.log('Error:'+ err);
-                        resolve(err);
+                        reject(err);
                         return;
                     }
                     callback(result);
@@ -56,7 +56,7 @@ module.exports = async (opt) => {
             });
         });
     }).catch((error) => {
-        // console.log(error);
+        return error;
     });
 }
 

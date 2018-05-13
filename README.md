@@ -112,12 +112,12 @@ response:
 ```json
 {
   "code": 100000,
-  "father_node_id": 10,
+  "father_id": 10,
   "content": "这是详细内容",
   "desc": "这是描述",
   "timestamp": "xxxx-xx-xx",
   "author": "长尼玛",
-  "child_node": false
+  "child_nodes": false
 }
 ```
 
@@ -129,7 +129,7 @@ params:
 
 ```json
 {
-  "father_node_id": 10,
+  "father_id": 10,
   "content": "这是详细内容",
   "desc": "这是描述"
 }
@@ -140,11 +140,11 @@ response:
 ```json
 {
   "code": 100000,
-  "father_node_id": 10,
+  "father_id": 10,
   "content": "这是详细内容",
   "desc": "这是描述",
   "timestamp": "xxxx-xx-xx",
-  "author": "长尼玛",
-  "child_node": false
+  "author_id": "1321412412",
+  "child_nodes": false
 }
 ```

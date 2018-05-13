@@ -1,4 +1,5 @@
-let list = require('../actions/list');
+let node = require('../actions/node');
 
 // 获取列表
-exports.list = list.index;
+exports.list = node.list;
+exports.create = node.create;

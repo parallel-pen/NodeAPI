@@ -27,7 +27,7 @@ app.post('/api/resigter', user.resigter);
 
 // 内容操作
 app.get('/api/node/list', node.list);
-
+app.post('/api/node/create', node.create);
 
 app.listen(8888, function() {
     console.log('App listening on 8888');
