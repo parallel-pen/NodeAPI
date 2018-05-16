@@ -27,6 +27,7 @@ app.post('/api/resigter', user.resigter);
 
 // 内容操作
 app.get('/api/node/list', node.list);
+app.get('/api/node/content', node.content);
 app.post('/api/node/create', node.create);
 
 app.listen(8888, function() {

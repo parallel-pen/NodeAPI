@@ -6,8 +6,7 @@ const saltRounds = 10;
 
 // 登陆
 exports.login = async (req, res) => {
-    let account = req.body.account;
-    let password = req.body.password;
+    const { account, password } = req.body;
     if (!account || !password) {
         res.send({
             code: 200000,
@@ -60,7 +59,7 @@ exports.login = async (req, res) => {
             uid: userInfo._id,
             token: token,
             username: userInfo.username,
-            my_content: userInfo.content
+            myContent: userInfo.content
         });
         return;
     } else {
@@ -74,10 +73,8 @@ exports.login = async (req, res) => {
 
 // 注册
 exports.resigter = async (req, res) => {
-    let account = req.body.account;
-    let password = req.body.password;
-    let invite_code = req.body.invite_code;
-    if (!account || !password || !invite_code) {
+    const { account, password, inviteCode } = req.body;
+    if (!account || !password || !inviteCode) {
         res.send({
             code: 200000,
             msg: '参数为空'
@@ -88,7 +85,7 @@ exports.resigter = async (req, res) => {
         type: 'find',
         table: 'invitations',
         query: {
-            code: invite_code
+            code: inviteCode
         }
     };
     if (escape(password).indexOf("%u") > 0) {
@@ -172,7 +169,7 @@ exports.resigter = async (req, res) => {
             uid: userInfo._id,
             token: token,
             account: account,
-            my_content: userInfo.content
+            myContent: userInfo.content
         });
     }).catch((error) => {
         res.send({

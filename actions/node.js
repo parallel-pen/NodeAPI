@@ -2,10 +2,11 @@
 const sha256 = require('sha256');
 const db = require('../assets/dbaction');
 const checkToken = require('../assets/tokencheck');
+const findGeniusNode = require('../assets/findgeniusnode');
 
-exports.list = async (req, res) => {
+exports.content = async (req, res) => {
     const token = req.header('Authorization');
-    const nodeId = req.query.node_id;
+    const { nodeId } = req.query;
     const user = await checkToken(token);
     if (!user) {
         res.statusCode = 401;
@@ -23,7 +24,6 @@ exports.list = async (req, res) => {
             [nodeId ? "_id" : 'first']: nodeId || true
         }
     };
-    console.log(nodeOpt);
     let nodeFind = await db(nodeOpt);
     if (nodeFind.length === 0) {
         res.send({
@@ -37,21 +37,55 @@ exports.list = async (req, res) => {
     let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
     res.send({
         code: 100000,
-        node_id: _id,
-        father_id: father_id,
+        nodeId: _id,
+        fatherId: father_id,
         content: content,
         desc: desc,
         timestamp: timestamp,
-        author_id: uid,
-        child_nodes: false
+        authorId: uid,
+        childNodes: false
     });
 }
 
+exports.list = async (req, res) => {
+    const token = req.header('Authorization');
+    let { nodeId } = req.query;
+    const user = await checkToken(token);
+    if (!user) {
+        res.statusCode = 401;
+        res.send({
+            code: 300000,
+            msg: '登录信息过期'
+        });
+        return;
+    }
+    let uid = user[0]._id;
+    if (!nodeId) {
+        const geniusNode = await findGeniusNode();
+        let nodeId = geniusNode[0]._id;
+    }
+    let nodeOpt = {
+        type: 'find',
+        table: 'nodes',
+        query: {
+            "father_id": nodeId
+        }
+    };
+    let childNodes = await db(nodeOpt);
+    let nodeList = Array();
+    childNodes.map((item, index) => {
+        
+    });
+    res.send({
+        code: 100000,
+        nodeList: []
+    });
+};
+
 exports.create = async (req, res) => {
-    let token = req.header('Authorization');
-    let { content, desc } = req.body;
-    let fatherId = req.body.father_id;
-    let user = await checkToken(token);
+    const token = req.header('Authorization');
+    const { content, desc, fatherId } = req.body;
+    const user = await checkToken(token);
     if (!user) {
         res.statusCode = 401;
         res.send({
@@ -106,12 +140,12 @@ exports.create = async (req, res) => {
     let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
     res.send({
         code: 100000,
-        node_id: nodeCreate.ops[0]._id,
-        father_id: fatherId,
+        nodeId: nodeCreate.ops[0]._id,
+        fatherId: fatherId,
         content: content,
         desc: desc,
         timestamp: timestamp,
-        author_id: uid,
-        child_nodes: false
+        authorId: uid,
+        childNodes: false
     });
 };

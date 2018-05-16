@@ -14,7 +14,4 @@ module.exports = async (token) => {
     } else {
         return findUser;
     }
-    return new Promise((resolve, reject) => {
-        
-    });
 }

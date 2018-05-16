@@ -24,9 +24,9 @@
 params:
 ```json
 {
-  "username": "长尼玛",
   "account": "raylin51",
-  "password": "(secret)"
+  "password": "(secret)",
+  "inviteCode": "adfadsf"
 }
 ```
 
@@ -37,8 +37,7 @@ response:
   "code": 100000,
   "uid": 1,
   "token": "fdafadhskghaiudgaiu",
-  "username": "长尼玛",
-  "my_content": []
+  "myContent": []
 }
 ```
 
@@ -62,8 +61,7 @@ response:
   "code": 100000,
   "uid": 1,
   "token": "fdafadhskghaiudgaiu",
-  "username": "长尼玛",
-  "my_content": []
+  "myContent": []
 }
 ```
 
@@ -77,7 +75,7 @@ params: (可选，为空时返回初始节点)
 
 ```json
 {
-  "node_id": 562523423523
+  "nodeId": 562523423523
 }
 ```
 
@@ -86,9 +84,9 @@ response:
 ```json
 {
   "code": 100000,
-  "node_list": [
+  "nodeList": [
     {
-      "node_id": 12,
+      "nodeId": 12,
       "desc": "这是概括描述"
     }
   ]
@@ -103,7 +101,7 @@ params: (可选，为空时返回初始节点)
 
 ```json
 {
-  "node_id": 5643434
+  "nodeId": 5643434
 }
 ```
 
@@ -112,13 +110,13 @@ response:
 ```json
 {
   "code": 100000,
-  "node_id": 12,
-  "father_id": 10,
+  "nodeId": 12,
+  "fatherId": 10,
   "content": "这是详细内容",
   "desc": "这是描述",
-  "timestamp": "xxxx-xx-xx",
-  "author": "长尼玛",
-  "child_nodes": false
+  "timestamp": "2018-05-13T14:27:08.000Z",
+  "author": "raylzj51",
+  "childNodes": false
 }
 ```
 
@@ -130,7 +128,7 @@ params:
 
 ```json
 {
-  "father_id": 10,
+  "fatherId": 10,
   "content": "这是详细内容",
   "desc": "这是描述"
 }
@@ -141,12 +139,12 @@ response:
 ```json
 {
   "code": 100000,
-  "node_id": 12,
-  "father_id": 10,
+  "nodeId": 12,
+  "fatherId": 10,
   "content": "这是详细内容",
   "desc": "这是描述",
-  "timestamp": "xxxx-xx-xx",
-  "author_id": "1321412412",
-  "child_nodes": false
+  "timestamp": "2018-05-13T14:27:08.000Z",
+  "author": "raylzj51",
+  "childNodes": false
 }
 ```
