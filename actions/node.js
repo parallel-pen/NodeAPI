@@ -60,25 +60,26 @@ exports.list = async (req, res) => {
         return;
     }
     let uid = user[0]._id;
-    if (!nodeId) {
-        const geniusNode = await findGeniusNode();
-        let nodeId = geniusNode[0]._id;
-    }
+    const geniusNode = await findGeniusNode();
     let nodeOpt = {
         type: 'find',
         table: 'nodes',
         query: {
-            "father_id": nodeId
+            "father_id": nodeId || geniusNode[0]._id.toString()
         }
     };
     let childNodes = await db(nodeOpt);
     let nodeList = Array();
     childNodes.map((item, index) => {
-        
+        let node = {
+            nodeId: item._id,
+            desc: item.desc
+        };
+        nodeList.push(node);
     });
     res.send({
         code: 100000,
-        nodeList: []
+        nodeList: nodeList
     });
 };
 
