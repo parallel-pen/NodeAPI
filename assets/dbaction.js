@@ -1,6 +1,6 @@
 'use strict';
-const mongodb = require("mongodb").MongoClient;
-const ObjectId = require("mongodb").ObjectId;
+const mongodb = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 
 /* 
     type: 数据库操作, (find, updateOne, delete, insertOne)
@@ -10,57 +10,59 @@ const ObjectId = require("mongodb").ObjectId;
     sort: 排序法
 */
 
-module.exports = async (opt) => {
-    if(!opt.table){
-        return;
-    }
+module.exports = async opt => {
+  if (!opt.table) {
+    return;
+  }
 
-    return new Promise((resolve, reject) => {
-        let oprateData = (db, callback) => {  
-            let collection = db.collection(opt.table);
-            //插入数据
-            let { data, query, sort, type } = opt;
-            if (query._id !== undefined) {
-                query._id = ObjectId(query._id);
+  return new Promise((resolve, reject) => {
+    let oprateData = (db, callback) => {
+      let collection = db.collection(opt.table);
+      //插入数据
+      let { data, query, sort, type } = opt;
+      if (query._id !== undefined) {
+        query._id = ObjectId(query._id);
+      }
+      if (type == 'find') {
+        collection
+          .find(query || {})
+          .sort(sort || {})
+          .toArray((err, result) => {
+            if (err) {
+              console.log('Error:' + err);
+              reject(err);
+              return;
             }
-            if(type == 'find'){
-                collection.find(query||{}).sort(sort||{}).toArray((err, result) => { 
-                    if(err){
-                        console.log('Error:'+ err);
-                        reject(err);
-                        return;
-                    }
-                    callback(result);
-                });
-            }else if(type == 'updateOne'){
-                collection[type](query, data, (err, result) => { 
-                    if(err){
-                        console.log('Error:'+ err);
-                        reject(err);
-                        return;
-                    }
-                    callback(result);
-                });
-            }else{
-                collection[type](query, (err, result) => { 
-                    if(err){
-                        console.log('Error:'+ err);
-                        reject(err);
-                        return;
-                    }
-                    callback(result);
-                });
-            }
-        }
-        mongodb.connect('mongodb://localhost:27017/', (err, client) => {
-            // console.log("连接成功！");
-            oprateData(client.db('parallel'), (result) => {
-                resolve(result);
-                client.close();
-            });
+            callback(result);
+          });
+      } else if (type == 'updateOne') {
+        collection[type](query, data, (err, result) => {
+          if (err) {
+            console.log('Error:' + err);
+            reject(err);
+            return;
+          }
+          callback(result);
         });
-    }).catch((error) => {
-        return error;
+      } else {
+        collection[type](query, (err, result) => {
+          if (err) {
+            console.log('Error:' + err);
+            reject(err);
+            return;
+          }
+          callback(result);
+        });
+      }
+    };
+    mongodb.connect('mongodb://localhost:27017/', (err, client) => {
+      // console.log("连接成功！");
+      oprateData(client.db('parallel'), result => {
+        resolve(result);
+        client.close();
+      });
     });
-}
-
+  }).catch(error => {
+    return error;
+  });
+};
