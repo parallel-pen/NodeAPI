@@ -36,7 +36,7 @@ app.post('/register', user.register);
 app.get('/users', user.number);
 
 // 内容操作
-app.get('/node/list', node.list);
+// app.get('/node/list', node.list);
 app.get('/node/content', node.content);
 app.post('/node/create', node.create);
 

@@ -35,6 +35,22 @@ exports.content = async (req, res) => {
   let { _id, father_id, content, desc, author_id, child_nodes } = nodeFind[0];
   let _str = _id.toString().substr(0, 8);
   let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
+  let childOpt = {
+    type: 'find',
+    table: 'nodes',
+    query: {
+      father_id: _id
+    }
+  };
+  let childNodes = await db(childOpt);
+  let childList = Array();
+  childNodes.map((item, index) => {
+    let node = {
+      nodeId: item._id,
+      desc: item.desc
+    };
+    childList.push(node);
+  });
   res.send({
     code: 100000,
     nodeId: _id,
@@ -43,45 +59,45 @@ exports.content = async (req, res) => {
     desc: desc,
     timestamp: timestamp,
     authorId: uid,
-    childNodes: false
+    childNodes: childList
   });
 };
 
-exports.list = async (req, res) => {
-  const token = req.header('Authorization');
-  let { nodeId } = req.query;
-  const user = await checkToken(token);
-  if (!user) {
-    res.statusCode = 401;
-    res.send({
-      code: 300000,
-      msg: '登录信息过期'
-    });
-    return;
-  }
-  let uid = user[0]._id;
-  const geniusNode = await findGeniusNode();
-  let nodeOpt = {
-    type: 'find',
-    table: 'nodes',
-    query: {
-      father_id: nodeId || geniusNode[0]._id.toString()
-    }
-  };
-  let childNodes = await db(nodeOpt);
-  let nodeList = Array();
-  childNodes.map((item, index) => {
-    let node = {
-      nodeId: item._id,
-      desc: item.desc
-    };
-    nodeList.push(node);
-  });
-  res.send({
-    code: 100000,
-    nodeList: nodeList
-  });
-};
+// exports.list = async (req, res) => {
+//   const token = req.header('Authorization');
+//   let { nodeId } = req.query;
+//   const user = await checkToken(token);
+//   if (!user) {
+//     res.statusCode = 401;
+//     res.send({
+//       code: 300000,
+//       msg: '登录信息过期'
+//     });
+//     return;
+//   }
+//   let uid = user[0]._id;
+//   const geniusNode = await findGeniusNode();
+//   let nodeOpt = {
+//     type: 'find',
+//     table: 'nodes',
+//     query: {
+//       father_id: nodeId || geniusNode[0]._id.toString()
+//     }
+//   };
+//   let childNodes = await db(nodeOpt);
+//   let nodeList = Array();
+//   childNodes.map((item, index) => {
+//     let node = {
+//       nodeId: item._id,
+//       desc: item.desc
+//     };
+//     nodeList.push(node);
+//   });
+//   res.send({
+//     code: 100000,
+//     nodeList: nodeList
+//   });
+// };
 
 exports.create = async (req, res) => {
   const token = req.header('Authorization');

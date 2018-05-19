@@ -187,14 +187,14 @@ exports.register = async (req, res) => {
 
 // 用户数量
 exports.number = async (req, res) => {
-    const opt = {
-        type: "find",
-        table: "users",
-        query: {}
-    };
-    let usersNumber = db(opt);
-    res.send({
-        code: 100000,
-        usersNumber: usersNumber.length
-    });
+  const opt = {
+    type: "find",
+    table: "users",
+    query: {}
+  };
+  let usersNumber = db(opt);
+  res.send({
+    code: 100000,
+    usersNumber: usersNumber.length
+  });
 }
