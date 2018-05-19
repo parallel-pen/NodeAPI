@@ -61,7 +61,12 @@ response:
   "code": 100000,
   "uid": 1,
   "token": "fdafadhskghaiudgaiu",
-  "myContent": []
+  "myContent": [
+    {
+      "desc": "xxx",
+      "nodeId": "xxx"
+    }
+  ]
 }
 ```
 
