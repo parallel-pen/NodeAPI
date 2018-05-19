@@ -19,14 +19,14 @@
 
 ### 注册
 
-```POST /registered```
+```POST /register```
 
 params:
 ```json
 {
   "account": "raylin51",
   "password": "(secret)",
-  "inviteCode": "adfadsf"
+  "invitation": "adfadsf"
 }
 ```
 
