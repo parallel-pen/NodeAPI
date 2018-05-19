@@ -67,41 +67,16 @@ response:
 
 ## 内容操作
 
-### 请求节点下分支列表
-
-```GET /node/list```
-
-params: (可选，为空时返回初始节点)
-
-```json
-{
-  "nodeId": 562523423523
-}
-```
-
-response:
-
-```json
-{
-  "code": 100000,
-  "nodeList": [
-    {
-      "nodeId": 12,
-      "desc": "这是概括描述"
-    }
-  ]
-}
-```
-
 ### 请求节点详细内容
 
 ```GET /node/content```
 
-params: (可选，为空时返回初始节点)
+params: 
 
 ```json
 {
-  "nodeId": 5643434
+  "nodeId": 5643434,
+  "first": 1 //可选，当nodeId为空时传该参数，表示请求首个节点
 }
 ```
 
