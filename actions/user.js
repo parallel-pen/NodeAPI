@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
 };
 
 // 注册
-exports.resigter = async (req, res) => {
+exports.register = async (req, res) => {
     const { account, password, inviteCode } = req.body;
     if (!account || !password || !inviteCode) {
         res.send({
@@ -178,3 +178,17 @@ exports.resigter = async (req, res) => {
         });
     });
 };
+
+// 用户数量
+exports.number = async (req, res) => {
+    const opt = {
+        type: "find",
+        table: "users",
+        query: {}
+    };
+    let usersNumber = db(opt);
+    res.send({
+        code: 100000,
+        usersNumber: usersNumber.length
+    });
+}

@@ -22,13 +22,14 @@ app.all('*', function(req, res, next) {
 });
 
 // 账户操作
-app.post('/api/login', user.login);
-app.post('/api/resigter', user.resigter);
+app.post('/login', user.login);
+app.post('/register', user.register);
+app.get('/users', user.number);
 
 // 内容操作
-app.get('/api/node/list', node.list);
-app.get('/api/node/content', node.content);
-app.post('/api/node/create', node.create);
+app.get('/node/list', node.list);
+app.get('/node/content', node.content);
+app.post('/node/create', node.create);
 
 app.listen(8888, function() {
     console.log('App listening on 8888');

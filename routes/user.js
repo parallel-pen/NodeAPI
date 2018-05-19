@@ -5,4 +5,6 @@ let user = require('../actions/user');
 // 登陆
 exports.login = user.login;
 // 注册
-exports.resigter = user.resigter;
+exports.register = user.register;
+// 用户数量
+exports.number = user.number;
