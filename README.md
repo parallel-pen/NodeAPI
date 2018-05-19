@@ -37,7 +37,8 @@ response:
   "code": 100000,
   "uid": 1,
   "token": "fdafadhskghaiudgaiu",
-  "myContent": []
+  "myContent": [],
+  "recentView": {}
 }
 ```
 
@@ -66,7 +67,11 @@ response:
       "desc": "xxx",
       "nodeId": "xxx"
     }
-  ]
+  ],
+  "recentView": {
+    "desc": "xxxx",
+    "nodeId": "124124"
+  }
 }
 ```
 

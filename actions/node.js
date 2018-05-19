@@ -59,7 +59,7 @@ exports.content = async (req, res) => {
   let { _id, father_id, content, desc, child_nodes, author } = nodeFind[0];
   let _str = _id.toString().substr(0, 8);
   let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
-  let childOpt = {
+  const childOpt = {
     type: 'find',
     table: 'nodes',
     query: {
@@ -75,6 +75,22 @@ exports.content = async (req, res) => {
     };
     childList.push(node);
   });
+  const viewOpt = {
+    type: 'updateOne',
+    table: 'users',
+    query: {
+      _id: uid
+    },
+    data: {
+      $set: {
+        recent_view: {
+          desc: desc,
+          nodeId: _id
+        }
+      }
+    }
+  }
+  db(viewOpt);
   res.send({
     code: 100000,
     nodeId: _id,

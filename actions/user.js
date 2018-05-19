@@ -75,7 +75,8 @@ exports.login = async (req, res) => {
       uid: userInfo._id,
       token: token,
       username: userInfo.username,
-      myContent: userInfo.content
+      myContent: userInfo.content,
+      recentView: userInfo.recent_view
     });
     return;
   } else {
@@ -165,7 +166,8 @@ exports.register = async (req, res) => {
         query: {
           account: account,
           password: result,
-          content: []
+          content: [],
+          recent_view: {}
         }
       };
       let usersData = await db(opt);
@@ -207,7 +209,8 @@ exports.register = async (req, res) => {
         uid: userInfo._id,
         token: token,
         account: account,
-        myContent: userInfo.content
+        myContent: userInfo.content,
+        recentView: userInfo.recent_view
       });
     })
     .catch(error => {
