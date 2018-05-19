@@ -7,6 +7,22 @@ const saltRounds = 10;
 // 登陆
 exports.login = async (req, res) => {
   const { account, password } = req.body;
+  const descriptor = {
+    query: {
+      account: {type: "string", required: true},
+      password: {type: "string", required: true}
+    }
+  }
+  let validator = new schema(descriptor);
+  validator.validate({query: req.body}, (errors, fields) => {
+    if(errors) {
+      res.send({
+        code: 200000,
+        msg: '参数格式不正确'
+      });
+      return handleErrors(errors, fields);
+    }
+  });
   if (!account || !password) {
     res.send({
       code: 200000,
@@ -74,6 +90,23 @@ exports.login = async (req, res) => {
 // 注册
 exports.register = async (req, res) => {
   const { account, password, inviteCode } = req.body;
+  const descriptor = {
+    query: {
+      account: {type: "string", required: true},
+      password: {type: "string", required: true},
+      inviteCode: {type: "string", required: true}
+    }
+  }
+  let validator = new schema(descriptor);
+  validator.validate({query: req.body}, (errors, fields) => {
+    if(errors) {
+      res.send({
+        code: 200000,
+        msg: '参数格式不正确'
+      });
+      return handleErrors(errors, fields);
+    }
+  });
   if (!account || !password || !inviteCode) {
     res.send({
       code: 200000,

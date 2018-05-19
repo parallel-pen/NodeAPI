@@ -1,5 +1,6 @@
 // node
 const sha256 = require('sha256');
+const schema = require('async-validator');
 const db = require('../assets/dbaction');
 const checkToken = require('../assets/tokencheck');
 const findGeniusNode = require('../assets/findgeniusnode');
@@ -8,6 +9,22 @@ exports.content = async (req, res) => {
   const token = req.header('Authorization');
   const { nodeId, first } = req.query;
   const user = await checkToken(token);
+  const descriptor = {
+    query: {
+      nodeId: {type: "string", required: false},
+      first: {type: "number", required: false}
+    }
+  }
+  let validator = new schema(descriptor);
+  validator.validate({query: req.query}, (errors, fields) => {
+    if(errors) {
+      res.send({
+        code: 200000,
+        msg: '参数格式不正确'
+      });
+      return handleErrors(errors, fields);
+    }
+  });
   if (!user) {
     res.statusCode = 401;
     res.send({
@@ -16,7 +33,7 @@ exports.content = async (req, res) => {
     });
     return;
   }
-  if (!first) {
+  if (!first && !nodeId) {
     res.send({
         code: 200000,
         msg: '参数为空'
@@ -110,6 +127,23 @@ exports.create = async (req, res) => {
   const token = req.header('Authorization');
   const { content, desc, fatherId } = req.body;
   const user = await checkToken(token);
+  const descriptor = {
+    query: {
+      content: {type: "string", required: true},
+      desc: {type: "string", required: true},
+      fatherId: {type: "string", required: true}
+    }
+  }
+  let validator = new schema(descriptor);
+  validator.validate({query: req.body}, (errors, fields) => {
+    if(errors) {
+      res.send({
+        code: 200000,
+        msg: '参数格式不正确'
+      });
+      return handleErrors(errors, fields);
+    }
+  });
   if (!user) {
     res.statusCode = 401;
     res.send({

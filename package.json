@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Raylin51/parallel-pen#readme",
   "dependencies": {
+    "async-validator": "^1.8.2",
     "bcrypt": "^2.0.1",
     "express": "^4.16.3",
     "md5": "^2.2.1",
