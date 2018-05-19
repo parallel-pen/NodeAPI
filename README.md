@@ -96,7 +96,12 @@ response:
   "desc": "这是描述",
   "timestamp": "2018-05-13T14:27:08.000Z",
   "author": "raylzj51",
-  "childNodes": false
+  "childNodes": [
+    {
+      "desc": "xxx",
+      "nodeId": "1231241"
+    }
+  ]
 }
 ```
 
