@@ -39,7 +39,7 @@ exports.content = async (req, res) => {
     });
     return;
   }
-  let { _id, father_id, content, desc, author_id, child_nodes } = nodeFind[0];
+  let { _id, father_id, content, desc, child_nodes, author } = nodeFind[0];
   let _str = _id.toString().substr(0, 8);
   let timestamp = new Date(Number(parseInt(_str, 16).toString() + '000'));
   let childOpt = {
@@ -65,7 +65,7 @@ exports.content = async (req, res) => {
     content: content,
     desc: desc,
     timestamp: timestamp,
-    authorId: uid,
+    author: author,
     childNodes: childList
   });
 };
@@ -147,6 +147,7 @@ exports.create = async (req, res) => {
       content: content,
       desc: desc,
       author_id: uid,
+      author: user[0].account,
       hash: hash,
       father_id: fatherId,
       child_nodes: false
