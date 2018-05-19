@@ -6,13 +6,20 @@ const findGeniusNode = require('../assets/findgeniusnode');
 
 exports.content = async (req, res) => {
   const token = req.header('Authorization');
-  const { nodeId } = req.query;
+  const { nodeId, first } = req.query;
   const user = await checkToken(token);
   if (!user) {
     res.statusCode = 401;
     res.send({
       code: 300000,
       msg: '登录信息过期'
+    });
+    return;
+  }
+  if (!first) {
+    res.send({
+        code: 200000,
+        msg: '参数为空'
     });
     return;
   }
