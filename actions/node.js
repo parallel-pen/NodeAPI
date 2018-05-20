@@ -14,7 +14,7 @@ exports.content = async (req, res) => {
       type: "object", required: true,
       fields: {
         nodeId: {type: "string", required: false},
-        first: {type: "number", required: false}
+        first: {type: "string", required: false}
       }
     }
   }
