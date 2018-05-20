@@ -22,7 +22,7 @@ exports.content = async (req, res) => {
         code: 200000,
         msg: '参数格式不正确'
       });
-      return handleErrors(errors, fields);
+      return;
     }
   });
   if (!user) {
@@ -157,7 +157,7 @@ exports.create = async (req, res) => {
         code: 200000,
         msg: '参数格式不正确'
       });
-      return handleErrors(errors, fields);
+      return;
     }
   });
   if (!user) {

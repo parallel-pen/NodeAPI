@@ -1,3 +1,5 @@
+import { relative } from 'path';
+
 // user_account
 const bcrypt = require('bcrypt');
 const sha256 = require('sha256');
@@ -20,8 +22,8 @@ exports.login = async (req, res) => {
         code: 200000,
         msg: '参数格式不正确'
       });
-      return handleErrors(errors, fields);
     }
+    return;
   });
   if (!account || !password) {
     res.send({
@@ -105,8 +107,8 @@ exports.register = async (req, res) => {
         code: 200000,
         msg: '参数格式不正确'
       });
-      return handleErrors(errors, fields);
     }
+    return;
   });
   if (!account || !password || !inviteCode) {
     res.send({
