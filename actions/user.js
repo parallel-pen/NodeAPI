@@ -1,5 +1,3 @@
-import { relative } from 'path';
-
 // user_account
 const bcrypt = require('bcrypt');
 const sha256 = require('sha256');
