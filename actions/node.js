@@ -1,6 +1,7 @@
 // node
 const sha256 = require('sha256');
 const schema = require('async-validator');
+const ObjectId = require('mongodb').ObjectId;
 const db = require('../assets/dbaction');
 const checkToken = require('../assets/tokencheck');
 const findGeniusNode = require('../assets/findgeniusnode');
@@ -42,6 +43,13 @@ exports.content = async (req, res) => {
       });
       return;
     }
+    if (nodeId.length !== 24) {
+      res.send({
+        code: 200000,
+        msg: '参数格式不正确'
+      });
+      return;
+    }
     let uid = user[0]._id;
     let nodeOpt = {
       type: 'find',
@@ -65,7 +73,7 @@ exports.content = async (req, res) => {
       type: 'find',
       table: 'nodes',
       query: {
-        father_id: _id
+        father_id: _id.toString()
       }
     };
     let childNodes = await db(childOpt);
@@ -226,6 +234,7 @@ exports.create = async (req, res) => {
       desc: desc,
       timestamp: timestamp,
       authorId: uid,
+      author: user[0].account,
       childNodes: false
     });
   });
