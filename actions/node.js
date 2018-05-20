@@ -96,7 +96,6 @@ exports.content = async (req, res) => {
         }
       };
       let findFatherNode = await db(fatherOpt);
-      console.log(findFatherId);
       if (!findFatherId || findFatherId.length === 0) {
         break;
       }
