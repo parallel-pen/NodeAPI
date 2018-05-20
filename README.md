@@ -75,6 +75,26 @@ response:
 }
 ```
 
+### 用户信息
+
+```GET /userinfo```
+
+params:无参数，利用header判断用户id,仅支持返回自己的用户信息
+
+response:
+
+```json
+{
+  "code": 100000,
+  "account": "raylin51",
+  "myContent": [],
+  "recentView": {
+    "desc": "raylzj51",
+    "nodeId": "5b017bcddce961801905fc96"
+  }
+}
+```
+
 ## 内容操作
 
 ### 请求节点详细内容
