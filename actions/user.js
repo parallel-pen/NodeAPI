@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const sha256 = require('sha256');
 const schema = require('async-validator');
 const db = require('../assets/dbaction');
+const checkToken = require('../assets/tokencheck');
 const saltRounds = 10;
 
 // 登陆
@@ -77,7 +78,7 @@ exports.login = async (req, res) => {
         code: 100000,
         uid: userInfo._id,
         token: token,
-        username: userInfo.username,
+        account: userInfo.account,
         myContent: userInfo.content,
         recentView: userInfo.recent_view
       });
@@ -239,5 +240,17 @@ exports.number = async (req, res) => {
   res.send({
     code: 100000,
     usersNumber: usersNumber.length
+  });
+}
+
+// 用户信息
+exports.info = async (req, res) => {
+  const token = req.header('Authorization');
+  const user = await checkToken(token);
+  res.send({
+    code: 100000,
+    account: user[0].account,
+    myContent: user[0].content,
+    recentView: user[0].recent_view
   });
 }

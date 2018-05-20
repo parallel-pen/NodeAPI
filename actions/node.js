@@ -235,7 +235,7 @@ exports.create = async (req, res) => {
       timestamp: timestamp,
       authorId: uid,
       author: user[0].account,
-      childNodes: false
+      childNodes: []
     });
   });
 };

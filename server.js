@@ -34,6 +34,7 @@ app.all('*', function(req, res, next) {
 app.post('/login', user.login);
 app.post('/register', user.register);
 app.get('/users', user.number);
+app.get('/userinfo', user.info);
 
 // 内容操作
 // app.get('/node/list', node.list);
