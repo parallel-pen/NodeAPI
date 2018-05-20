@@ -1,6 +1,7 @@
 // user_account
 const bcrypt = require('bcrypt');
 const sha256 = require('sha256');
+const schema = require('async-validator');
 const db = require('../assets/dbaction');
 const saltRounds = 10;
 
