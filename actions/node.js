@@ -85,6 +85,28 @@ exports.content = async (req, res) => {
       };
       childList.push(node);
     });
+    let findFatherId = father_id;
+    let fatherNodes = Array();
+    for (var i = 0; i < 5; i++) {
+      fatherOpt = {
+        type: 'find',
+        table: 'nodes',
+        query: {
+          _id: findFatherId
+        }
+      };
+      let findFatherNode = await db(fatherOpt);
+      console.log(findFatherId);
+      if (!findFatherId || findFatherId.length === 0) {
+        break;
+      }
+      let fatherNode = {
+        desc: findFatherNode[0].desc,
+        nodeId: findFatherNode[0]._id
+      };
+      fatherNodes.push(fatherNode);
+      findFatherId = findFatherNode[0].father_id;
+    }
     const viewOpt = {
       type: 'updateOne',
       table: 'users',
@@ -104,7 +126,7 @@ exports.content = async (req, res) => {
     res.send({
       code: 100000,
       nodeId: _id,
-      fatherId: father_id,
+      fatherNodes: fatherNodes,
       content: content,
       desc: desc,
       timestamp: timestamp,

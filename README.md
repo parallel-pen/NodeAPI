@@ -116,7 +116,12 @@ response:
 {
   "code": 100000,
   "nodeId": 12,
-  "fatherId": 10,
+  "fatherNodes": [
+    {
+      "desc": "xxxxx",
+      "nodeId": "xxxxx"
+    }
+  ], // 最多五条
   "content": "这是详细内容",
   "desc": "这是描述",
   "timestamp": "2018-05-13T14:27:08.000Z",
