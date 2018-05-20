@@ -11,30 +11,49 @@ exports.login = async (req, res) => {
   const { account, password } = req.body;
   const descriptor = {
     query: {
-      type: "object", required: true,
+      type: 'object',
+      required: true,
       fields: {
-        account: {type: "string", required: true},
-        password: {type: "string", required: true}
+        account: [
+          {
+            required: true,
+          },
+          {
+            type: 'string',
+            min: 1,
+            max: 20,
+          }
+        ],
+        password: [
+          {
+            required: true,
+          },
+          {
+            type: 'string',
+            min: 6,
+            max: 18,
+          }
+        ],
       }
     }
-  }
-  let validator = new schema(descriptor);
-  validator.validate({query: req.body}, async (errors, fields) => {
-    if(errors) {
+  };
+  const validator = new schema(descriptor);
+  validator.validate({ query: req.body }, async (errors, fields) => {
+    if (errors) {
       res.send({
         code: 200000,
         msg: '参数格式不正确'
       });
       return;
     }
-    if (!account || !password) {
-      res.send({
-        code: 200000,
-        msg: '参数为空'
-      });
-      return;
-    }
-    let opt = {
+    // if (!account || !password) {
+    //   res.send({
+    //     code: 200000,
+    //     msg: '参数为空'
+    //   });
+    //   return;
+    // }
+    const opt = {
       type: 'find',
       table: 'users',
       query: {
@@ -98,30 +117,57 @@ exports.register = async (req, res) => {
   const { account, password, inviteCode } = req.body;
   const descriptor = {
     query: {
-      type: "object", required: true,
+      type: 'object',
+      required: true,
       fields: {
-        account: {type: "string", required: true},
-        password: {type: "string", required: true},
-        inviteCode: {type: "string", required: true}
+        account: [
+          {
+            required: true,
+          },
+          {
+            type: 'string',
+            min: 1,
+            max: 20,
+          }
+        ],
+        password: [
+          {
+            required: true,
+          },
+          {
+            type: 'string',
+            min: 6,
+            max: 18,
+          }
+        ],
+        invitation: [
+          {
+            required: true,
+          },
+          {
+            type: 'string',
+            len: 8,
+          }
+        ]
       }
     }
-  }
+  };
   let validator = new schema(descriptor);
-  validator.validate({query: req.body}, async (errors, fields) => {
-    if(errors) {
+  validator.validate({ query: req.body }, async (errors, fields) => {
+    if (errors) {
       res.send({
         code: 200000,
         msg: '参数格式不正确'
       });
       return;
     }
-    if (!account || !password || !inviteCode) {
-      res.send({
-        code: 200000,
-        msg: '参数为空'
-      });
-      return;
-    }
+    // if (!account || !password || !inviteCode) {
+    //   res.send({
+    //     code: 200000,
+    //     msg: '参数为空'
+    //   });
+    //   return;
+    // }
     let codeOpt = {
       type: 'find',
       table: 'invitations',
@@ -136,20 +182,20 @@ exports.register = async (req, res) => {
       });
       return;
     }
-    if (account.length > 20) {
-      res.send({
-        code: 200005,
-        msg: '账号长度错误'
-      });
-      return;
-    }
-    if (password.length > 18 || password.length < 6) {
-      res.send({
-        code: 200006,
-        msg: '密码长度错误'
-      });
-      return;
-    }
+    // if (account.length > 20) {
+    //   res.send({
+    //     code: 200005,
+    //     msg: '账号长度错误'
+    //   });
+    //   return;
+    // }
+    // if (password.length > 18 || password.length < 6) {
+    //   res.send({
+    //     code: 200006,
+    //     msg: '密码长度错误'
+    //   });
+    //   return;
+    // }
     let checkCode = await db(codeOpt);
     if (checkCode.length === 0) {
       res.send({
@@ -232,8 +278,8 @@ exports.register = async (req, res) => {
 // 用户数量
 exports.number = async (req, res) => {
   const opt = {
-    type: "find",
-    table: "users",
+    type: 'find',
+    table: 'users',
     query: {}
   };
   let usersNumber = db(opt);
@@ -241,7 +287,7 @@ exports.number = async (req, res) => {
     code: 100000,
     usersNumber: usersNumber.length
   });
-}
+};
 
 // 用户信息
 exports.info = async (req, res) => {
@@ -253,4 +299,4 @@ exports.info = async (req, res) => {
     myContent: user[0].content,
     recentView: user[0].recent_view
   });
-}
+};

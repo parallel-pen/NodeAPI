@@ -12,16 +12,24 @@ exports.content = async (req, res) => {
   const user = await checkToken(token);
   const descriptor = {
     query: {
-      type: "object", required: true,
+      type: 'object',
+      required: true,
       fields: {
-        nodeId: {type: "string", required: false},
-        first: {type: "string", required: false}
+        nodeId: {
+          type: 'string',
+          len: 24,
+          required: false
+        },
+        first: {
+          type: 'string',
+          required: false
+        }
       }
     }
-  }
-  let validator = new schema(descriptor);
-  validator.validate({query: req.query}, async (errors, fields) => {
-    if(errors) {
+  };
+  const validator = new schema(descriptor);
+  validator.validate({ query: req.query }, async (errors, fields) => {
+    if (errors) {
       res.send({
         code: 200000,
         msg: '参数格式不正确'
@@ -38,20 +46,20 @@ exports.content = async (req, res) => {
     }
     if (!first && !nodeId) {
       res.send({
-          code: 200000,
-          msg: '参数为空'
-      });
-      return;
-    }
-    if (nodeId.length !== 24) {
-      res.send({
         code: 200000,
-        msg: '参数格式不正确'
+        msg: '参数为空'
       });
       return;
     }
+    // if (nodeId.length !== 24) {
+    //   res.send({
+    //     code: 200000,
+    //     msg: '参数格式不正确'
+    //   });
+    //   return;
+    // }
     let uid = user[0]._id;
-    let nodeOpt = {
+    const nodeOpt = {
       type: 'find',
       table: 'nodes',
       query: {
@@ -120,7 +128,7 @@ exports.content = async (req, res) => {
           }
         }
       }
-    }
+    };
     db(viewOpt);
     res.send({
       code: 100000,
@@ -177,17 +185,31 @@ exports.create = async (req, res) => {
   const user = await checkToken(token);
   const descriptor = {
     query: {
-      type: "object", required: true,
+      type: 'object',
+      required: true,
       fields: {
-        content: {type: "string", required: true},
-        desc: {type: "string", required: true},
-        fatherId: {type: "string", required: true}
+        content: {
+          type: 'string',
+          required: true,
+          min: 100,
+          max: 4000,
+        },
+        desc: {
+          type: 'string',
+          required: true,
+          min: 10,
+          max: 100,
+        },
+        fatherId: {
+          type: 'string',
+          required: true
+        }
       }
     }
-  }
-  let validator = new schema(descriptor);
-  validator.validate({query: req.body}, async (errors, fields) => {
-    if(errors) {
+  };
+  const validator = new schema(descriptor);
+  validator.validate({ query: req.body }, async (errors, fields) => {
+    if (errors) {
       res.send({
         code: 200000,
         msg: '参数格式不正确'
@@ -202,26 +224,27 @@ exports.create = async (req, res) => {
       });
       return;
     }
-    if (!content || !desc || !fatherId) {
-      res.send({
-        code: 200000,
-        msg: '参数为空'
-      });
-      return;
-    }
-    if (content.length > 999) {
-      res.send({
-        code: 200012,
-        msg: '内容字数不符合要求'
-      });
-      return;
-    }
-    if (desc.length > 50) {
-      res.send({
-        code: 200013,
-        msg: '描述字数不符合要求'
-      });
-    }
+    // if (!content || !desc || !fatherId) {
+    //   res.send({
+    //     code: 200000,
+    //     msg: '参数为空'
+    //   });
+    //   return;
+    // }
+    // if (content.length > 999) {
+    //   res.send({
+    //     code: 200012,
+    //     msg: '内容字数不符合要求'
+    //   });
+    //   return;
+    // }
+    // if (desc.length > 100 || desc.length < 10) {
+    //   res.send({
+    //     code: 200013,
+    //     msg: '描述字数不符合要求'
+    //   });
+    //   return;
+    // }
     let hash = sha256(sha256(content));
     let uid = user[0]._id;
     let nodeOpt = {
