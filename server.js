@@ -17,7 +17,7 @@ const node = require('./routes/node');
 
 // all
 app.all('*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://parallelpen.top:80');
+  res.header('Access-Control-Allow-Origin', 'http://parallelpen.top');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization, token'
