@@ -114,7 +114,7 @@ exports.login = async (req, res) => {
 
 // 注册
 exports.register = async (req, res) => {
-  const { account, password, inviteCode } = req.body;
+  const { account, password, invitaion } = req.body;
   const descriptor = {
     query: {
       type: 'object',
@@ -172,7 +172,7 @@ exports.register = async (req, res) => {
       type: 'find',
       table: 'invitations',
       query: {
-        code: inviteCode
+        code: invitaion
       }
     };
     if (escape(password).indexOf('%u') > 0) {
